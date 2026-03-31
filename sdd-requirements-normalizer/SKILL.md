@@ -42,6 +42,7 @@ description: 将零散、模糊、非标准化的产品需求转化为符合 Spe
 ### 4. 产出符合 SDD 风格的 requirement 文档
 
 - 使用 `references/sdd-requirements-template.md` 作为默认文档结构。
+- 在描述布局和视觉要求时，读取 `references/design-foundations.md` 确保组件库、主题色、响应式规则与项目约定一致。
 - 优先服务原型产出：文档要足够清晰，能直接用于 Figma、线框图、UI 生成或前端搭建。
 - 优先写简洁、明确的要求，不写冗长叙述。
 - 需求应描述“可观察结果”，而不是臆测技术实现方式。
@@ -110,3 +111,4 @@ description: 将零散、模糊、非标准化的产品需求转化为符合 Spe
 
 - 使用 `references/sdd-requirements-template.md` 作为默认输出模板。
 - 使用 `references/interaction-layout-checklist.md` 补强 UX、交互和布局细节。
+- 使用 `references/design-foundations.md` 确认组件库、主题色和响应式规则。
