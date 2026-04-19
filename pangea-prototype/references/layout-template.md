@@ -38,6 +38,7 @@
           {{ tab.label }}
         </a-menu-item>
       </a-menu>
+      <div class="header-spacer" />
       <a-dropdown trigger="hover">
         <a-avatar :size="32" class="header-avatar">
           <icon-user />
@@ -218,6 +219,10 @@ const handleMenuClick = (key: string) => {
   background: rgb(var(--primary-3));
   color: #fff;
   flex-shrink: 0;
+}
+
+.header-spacer {
+  flex: 1;
 }
 
 // ── Body ──────────────────────────────────────────────────
