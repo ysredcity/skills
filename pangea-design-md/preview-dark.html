@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pangea 3 Linear — Dark Mode Preview</title>
+<style>
+  :root {
+    --primary-1: rgb(0, 68, 77);
+    --primary-2: rgb(4, 92, 100);
+    --primary-3: rgb(10, 117, 123);
+    --primary-4: rgb(18, 144, 147);
+    --primary-5: rgb(27, 170, 167);
+    --primary-6: rgb(37, 187, 179);
+    --primary-7: rgb(78, 204, 193);
+    --primary-8: rgb(124, 221, 209);
+    --primary-9: rgb(176, 238, 228);
+    --primary-10: rgb(235, 255, 251);
+    --color-text-1: rgba(255,255,255,0.9);
+    --color-text-2: rgba(255,255,255,0.7);
+    --color-text-3: rgba(255,255,255,0.5);
+    --color-text-4: rgba(255,255,255,0.3);
+    --color-fill-1: rgba(255,255,255,0.04);
+    --color-fill-2: rgba(255,255,255,0.08);
+    --color-fill-3: rgba(255,255,255,0.12);
+    --color-fill-4: rgba(255,255,255,0.16);
+    --color-border-1: rgb(46, 46, 48);
+    --color-border-2: rgb(72, 72, 73);
+    --color-border-3: rgb(95, 95, 96);
+    --color-border-4: rgb(146, 146, 147);
+    --color-bg-1: #17171a;
+    --color-bg-2: #232324;
+    --color-bg-3: #2a2a2b;
+    --color-bg-white: #232324;
+    --color-success: #00B42A;
+    --color-warning: #FF7D00;
+    --color-danger: #F53F3F;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--color-bg-1);
+    color: var(--color-text-1);
+    padding: 32px;
+    line-height: 1.5715;
+  }
+
+  h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+  h2 { font-size: 20px; font-weight: 600; margin: 32px 0 16px; color: var(--color-text-1); }
+  h3 { font-size: 16px; font-weight: 600; margin: 24px 0 12px; color: var(--color-text-2); }
+  p { font-size: 14px; color: var(--color-text-2); margin-bottom: 16px; }
+
+  .preview-card {
+    background: var(--color-bg-2);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid var(--color-border-1);
+  }
+
+  .swatch-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .swatch { width: 80px; text-align: center; }
+  .swatch-color { width: 80px; height: 48px; border-radius: 4px; border: 1px solid var(--color-border-2); }
+  .swatch-label { font-size: 11px; color: var(--color-text-3); margin-top: 4px; }
+  .swatch-value { font-size: 10px; color: var(--color-text-4); }
+
+  .type-row { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--color-border-1); }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { font-size: 12px; color: var(--color-text-3); margin-bottom: 4px; }
+
+  .btn-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 32px; padding: 0 16px; border-radius: 4px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    border: none; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--primary-6); color: var(--color-bg-1); }
+  .btn-primary:hover { background: var(--primary-5); }
+  .btn-secondary { background: var(--color-bg-3); color: var(--color-text-2); border: 1px solid var(--color-border-2); }
+  .btn-text { background: transparent; color: var(--primary-6); padding: 0 8px; }
+  .btn-danger { background: var(--color-danger); color: #fff; }
+
+  .input-demo {
+    height: 32px; padding: 0 12px; border: 1px solid var(--color-border-2);
+    border-radius: 4px; font-size: 14px; color: var(--color-text-1);
+    background: var(--color-bg-3); width: 240px;
+  }
+  .input-demo:focus { outline: none; border-color: var(--primary-6); }
+  .input-demo::placeholder { color: var(--color-text-3); }
+
+  .badge-row { display: flex; gap: 24px; align-items: center; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
+  .badge-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .badge-success .badge-dot { background: var(--color-success); }
+  .badge-warning .badge-dot { background: var(--color-warning); }
+  .badge-danger .badge-dot { background: var(--color-danger); }
+  .badge-default .badge-dot { background: var(--color-text-4); }
+
+  .demo-table { width: 100%; border-collapse: collapse; border: 1px solid var(--color-border-2); border-radius: 4px; overflow: hidden; }
+  .demo-table th { background: var(--color-fill-1); font-size: 14px; font-weight: 500; text-align: left; padding: 8px 16px; }
+  .demo-table td { font-size: 13px; padding: 8px 16px; border-top: 1px solid var(--color-border-1); }
+  .demo-table tr:hover td { background: var(--color-fill-1); }
+  .demo-table .link { color: var(--primary-6); cursor: pointer; font-size: 13px; }
+  .demo-table .link-danger { color: var(--color-danger); cursor: pointer; font-size: 13px; }
+
+  .shadow-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+  .shadow-box {
+    width: 120px; height: 80px; background: var(--color-bg-3);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--color-text-3);
+  }
+  .shadow-0 { box-shadow: none; border: 1px solid var(--color-border-2); }
+  .shadow-special { box-shadow: 0 0 1px rgba(255,255,255,0.2); }
+  .shadow-1 { box-shadow: 0 0 5px rgba(0,0,0,0.3); }
+  .shadow-2 { box-shadow: 0 0 10px rgba(0,0,0,0.3); }
+  .shadow-3 { box-shadow: 0 0 20px rgba(0,0,0,0.3); }
+
+  .radius-grid { display: flex; gap: 16px; align-items: end; }
+  .radius-box {
+    width: 64px; height: 64px; background: var(--primary-1);
+    border: 2px solid var(--primary-6); display: flex; align-items: center;
+    justify-content: center; font-size: 11px; color: var(--primary-8);
+  }
+
+  .spacing-grid { display: flex; gap: 8px; align-items: end; }
+  .spacing-bar { background: var(--primary-3); border-radius: 2px; width: 32px; }
+  .spacing-label { font-size: 10px; color: var(--color-text-3); text-align: center; margin-top: 4px; }
+
+  .layout-preview {
+    border: 1px solid var(--color-border-2); border-radius: 8px; overflow: hidden;
+    height: 280px; display: flex; flex-direction: column; background: var(--color-bg-2);
+  }
+  .layout-header {
+    height: 36px; background: var(--color-bg-2); display: flex; align-items: center;
+    padding: 0 12px; gap: 12px; font-size: 12px; font-weight: 600;
+    border-bottom: 1px solid var(--color-border-1);
+  }
+  .layout-header .tab { font-size: 11px; font-weight: 400; color: var(--color-text-3); padding: 0 8px; }
+  .layout-header .tab.active { color: var(--primary-6); }
+  .layout-body { flex: 1; display: flex; overflow: hidden; }
+  .layout-sider {
+    width: 140px; background: var(--color-bg-2); padding: 8px 0;
+    font-size: 12px; flex-shrink: 0;
+  }
+  .layout-menu-item { padding: 6px 16px; color: var(--color-text-2); cursor: pointer; }
+  .layout-menu-item.active { background: var(--color-bg-3); color: var(--primary-6); font-weight: 500; }
+  .layout-content {
+    flex: 1; background: var(--color-bg-3); border-radius: 8px 0 0 0;
+    padding: 12px; font-size: 11px; color: var(--color-text-3);
+  }
+</style>
+</head>
+<body>
+
+<h1>Pangea 3 Linear — Dark Mode Preview</h1>
+<p>Dark mode variant with inverted color scale. Activated via <code>body[arco-theme="dark"]</code>.</p>
+
+<!-- Colors: Primary Scale -->
+<div class="preview-card">
+  <h2>Primary Color Scale (Dark Mode)</h2>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-color" style="background:rgb(0,68,77)"></div><div class="swatch-label">primary-1</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(4,92,100)"></div><div class="swatch-label">primary-2</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(10,117,123)"></div><div class="swatch-label">primary-3</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(18,144,147)"></div><div class="swatch-label">primary-4</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(27,170,167)"></div><div class="swatch-label">primary-5</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(37,187,179)"></div><div class="swatch-label">primary-6</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(78,204,193)"></div><div class="swatch-label">primary-7</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(124,221,209)"></div><div class="swatch-label">primary-8</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(176,238,228)"></div><div class="swatch-label">primary-9</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgb(235,255,251)"></div><div class="swatch-label">primary-10</div></div>
+  </div>
+
+  <h3>Text Colors (Dark Mode)</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-color" style="background:rgba(255,255,255,0.9)"></div><div class="swatch-label">text-1</div><div class="swatch-value">90% white</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgba(255,255,255,0.7)"></div><div class="swatch-label">text-2</div><div class="swatch-value">70% white</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgba(255,255,255,0.5)"></div><div class="swatch-label">text-3</div><div class="swatch-value">50% white</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgba(255,255,255,0.3)"></div><div class="swatch-label">text-4</div><div class="swatch-value">30% white</div></div>
+  </div>
+
+  <h3>Background Surfaces (Dark Mode)</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-color" style="background:#17171a"></div><div class="swatch-label">bg-1</div><div class="swatch-value">Page</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#232324"></div><div class="swatch-label">bg-2</div><div class="swatch-value">Container</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#2a2a2b"></div><div class="swatch-label">bg-3</div><div class="swatch-value">Elevated</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#313132"></div><div class="swatch-label">bg-4</div><div class="swatch-value">Tertiary</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#373739"></div><div class="swatch-label">bg-5</div><div class="swatch-value">Floating</div></div>
+  </div>
+
+  <h3>Functional Colors</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-color" style="background:#00B42A"></div><div class="swatch-label">Success</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#FF7D00"></div><div class="swatch-label">Warning</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#F53F3F"></div><div class="swatch-label">Danger</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#3491FA"></div><div class="swatch-label">Info</div></div>
+  </div>
+</div>
+
+<!-- Typography -->
+<div class="preview-card">
+  <h2>Typography Scale</h2>
+  <div class="type-row">
+    <div class="type-meta">Page Title — 24px / SemiBold (600)</div>
+    <div style="font-size:24px;font-weight:600">页面主标题 Page Title</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta">Section Title — 20px / SemiBold (600)</div>
+    <div style="font-size:20px;font-weight:600">区块标题 Section Title</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta">Body Default — 14px / Regular (400)</div>
+    <div style="font-size:14px;font-weight:400">默认正文文本 Body text for primary content display.</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta">Body Dense — 13px / Regular (400)</div>
+    <div style="font-size:13px;font-weight:400;color:var(--color-text-2)">密集信息文本 Dense text for table cells.</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta">Helper — 12px / Regular (400)</div>
+    <div style="font-size:12px;font-weight:400;color:var(--color-text-3)">辅助文本 Helper text, timestamps</div>
+  </div>
+</div>
+
+<!-- Buttons -->
+<div class="preview-card">
+  <h2>Buttons</h2>
+  <div class="btn-row">
+    <button class="btn btn-primary">Primary</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-text">Text Link</button>
+    <button class="btn btn-danger">Danger</button>
+  </div>
+</div>
+
+<!-- Inputs -->
+<div class="preview-card">
+  <h2>Inputs</h2>
+  <div style="display:flex;gap:16px;flex-wrap:wrap">
+    <input class="input-demo" placeholder="请输入关键词" />
+    <input class="input-demo" value="已填写内容" />
+  </div>
+</div>
+
+<!-- Badges -->
+<div class="preview-card">
+  <h2>Status Badges</h2>
+  <div class="badge-row">
+    <span class="badge badge-success"><span class="badge-dot"></span>启用</span>
+    <span class="badge badge-warning"><span class="badge-dot"></span>待审核</span>
+    <span class="badge badge-danger"><span class="badge-dot"></span>异常</span>
+    <span class="badge badge-default"><span class="badge-dot"></span>禁用</span>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="preview-card">
+  <h2>Data Table</h2>
+  <table class="demo-table">
+    <thead>
+      <tr><th>名称</th><th>状态</th><th>创建时间</th><th>操作</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>示例数据 A</td>
+        <td><span class="badge badge-success"><span class="badge-dot"></span>启用</span></td>
+        <td>2024-01-15 09:00</td>
+        <td><span class="link">编辑</span> &nbsp;|&nbsp; <span class="link-danger">删除</span></td>
+      </tr>
+      <tr>
+        <td>示例数据 B</td>
+        <td><span class="badge badge-default"><span class="badge-dot"></span>禁用</span></td>
+        <td>2024-01-14 14:30</td>
+        <td><span class="link">编辑</span> &nbsp;|&nbsp; <span class="link-danger">删除</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Shadows -->
+<div class="preview-card">
+  <h2>Shadow Levels</h2>
+  <div class="shadow-grid">
+    <div><div class="shadow-box shadow-0">Flat</div><div class="spacing-label">No shadow</div></div>
+    <div><div class="shadow-box shadow-special">Special</div><div class="spacing-label">Micro</div></div>
+    <div><div class="shadow-box shadow-1">Shadow 1</div><div class="spacing-label">5px</div></div>
+    <div><div class="shadow-box shadow-2">Shadow 2</div><div class="spacing-label">10px</div></div>
+    <div><div class="shadow-box shadow-3">Shadow 3</div><div class="spacing-label">20px</div></div>
+  </div>
+</div>
+
+<!-- Layout Preview -->
+<div class="preview-card">
+  <h2>Layout Structure (Dark)</h2>
+  <div class="layout-preview">
+    <div class="layout-header">
+      <span style="color:var(--primary-6);font-size:14px">⬡</span>
+      <span>平台名称</span>
+      <span class="tab active">工作台</span>
+      <span class="tab">系统管理</span>
+      <span style="flex:1"></span>
+      <span style="width:24px;height:24px;border-radius:50%;background:var(--primary-3);display:inline-block"></span>
+    </div>
+    <div class="layout-body">
+      <div class="layout-sider">
+        <div class="layout-menu-item active">首页</div>
+        <div class="layout-menu-item">列表管理</div>
+        <div class="layout-menu-item">数据看板</div>
+      </div>
+      <div class="layout-content">
+        Content Area (Dark)<br/>
+        <span style="font-size:10px">background: bg-3<br/>border-radius: 8px 0 0 0</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
