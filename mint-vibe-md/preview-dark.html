@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mint Vibe — Design System Preview (Dark)</title>
+<style>
+  :root {
+    --brand-1: #123A30;
+    --brand-2: #1A5444;
+    --brand-6: #4FE0B5;
+    --brand-5: #6BE8C5;
+    --brand-7: #2FCBA0;
+    --neutral-btn: #3A3A42;
+    --neutral-btn-h: #46464F;
+    --purple-1: #2A2350;
+    --purple-6: #9D8CF7;
+    --purple-7: #8472E8;
+    --purple-text: #C3B6FB;
+    --canvas: #121214;
+    --white: #1E1E22;
+    --fill: #2A2A30;
+    --divider: #2F2F36;
+    --text-1: #F2F2F4;
+    --text-2: #9A9AA0;
+    --text-3: #6A6A70;
+    --orange: #FF7A2F;
+    --gold-1: #C9A85E;
+    --gold-2: #9A7B3F;
+    --gold-text: #1A1A1A;
+    --magenta: #E94C9B;
+    --grass: #4FD98A;
+    --promo-blue: #3A8EF0;
+    --danger: #F5483B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, system-ui, sans-serif;
+    background: var(--canvas);
+    color: var(--text-1);
+    padding: 32px;
+    line-height: 1.5;
+  }
+  .wordmark { font-family: Poppins, Montserrat, Arial, sans-serif; font-weight: 700; }
+  h1 { font-family: Poppins, Arial, sans-serif; font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { font-size: 14px; color: var(--text-2); margin-bottom: 28px; }
+  h2 { font-size: 18px; font-weight: 600; margin: 28px 0 14px; }
+  h3 { font-size: 14px; font-weight: 600; margin: 18px 0 10px; color: var(--text-2); }
+  .card { background: var(--white); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+
+  .swatch-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .swatch { width: 96px; }
+  .swatch-color { width: 96px; height: 56px; border-radius: 10px; border: 1px solid var(--divider); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; }
+  .swatch-name { font-size: 12px; margin-top: 6px; font-weight: 500; }
+  .swatch-value { font-size: 11px; color: var(--text-3); }
+
+  .type-row { padding: 12px 0; border-bottom: 1px solid var(--fill); }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+
+  .row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .pill { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; font-size: 15px; font-weight: 600; cursor: pointer; border: none; padding: 0 24px; height: 44px; transition: all 0.2s; }
+  .pill-primary { background: var(--brand-6); color: #06231A; box-shadow: 0 4px 14px rgba(79,224,181,0.30); }
+  .pill-primary:hover { background: var(--brand-5); }
+  .pill-dark { background: var(--neutral-btn); color: #fff; }
+  .pill-dark:hover { background: var(--neutral-btn-h); }
+  .pill-purple { background: var(--purple-6); color: #1A1340; }
+  .pill-purple-tint { background: var(--purple-1); color: var(--purple-text); }
+  .pill-outline { background: transparent; color: var(--text-1); border: 1px solid var(--divider); height: 32px; font-size: 13px; font-weight: 500; padding: 0 18px; }
+  .pill-orange { background: var(--orange); color: #fff; }
+  .circle-btn { width: 48px; height: 48px; border-radius: 50%; background: var(--fill); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.4); cursor: pointer; font-size: 18px; color: var(--text-1); }
+  .circle-mint { background: var(--brand-6); color: #06231A; }
+  .circle-purple { background: var(--purple-6); color: #1A1340; }
+
+  .search { display: flex; align-items: center; gap: 8px; background: var(--fill); border-radius: 999px; height: 40px; padding: 0 16px; width: 280px; color: var(--text-3); font-size: 14px; }
+
+  .chip { display: inline-flex; align-items: center; gap: 6px; background: var(--fill); border: 1px solid var(--divider); border-radius: 999px; padding: 7px 14px; font-size: 13px; color: var(--text-1); }
+  .chip-mint { background: var(--brand-1); color: var(--brand-6); border-color: var(--brand-2); }
+  .chip-purple { background: var(--purple-1); color: var(--purple-text); border-color: var(--purple-1); }
+
+  .badge { display: inline-flex; align-items: center; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 500; }
+  .badge-brand { background: var(--brand-1); color: var(--brand-6); }
+  .badge-purple { background: var(--purple-1); color: var(--purple-text); }
+  .badge-gray { background: var(--fill); color: var(--text-2); }
+  .badge-gold { background: #3A2E14; color: var(--gold-1); }
+
+  .glass-stage {
+    position: relative; height: 220px; border-radius: 16px; overflow: hidden;
+    background: linear-gradient(135deg,#3A6FD8,#E94C9B 60%,#FF7A2F);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .glass-stage .deco { position:absolute; color:#fff; font-family:Poppins,Arial; font-weight:700; font-size:40px; opacity:.30; }
+  .glass-bar {
+    position: relative; width: 80%;
+    background: rgba(30,30,34,0.55);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 0.5px solid rgba(255,255,255,0.18);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.15);
+    border-radius: 24px; padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .glass-bar .gt { font-size: 15px; font-weight: 600; color: #fff; }
+  .glass-bar .gs { font-size: 12px; color: #cfcfd6; margin-top: 2px; }
+
+  .group-label { font-size: 13px; color: var(--text-2); margin: 4px 0 8px 4px; }
+  .list-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--fill); font-size: 15px; font-weight: 500; }
+  .list-item:last-child { border-bottom: none; }
+
+  .tabbar {
+    display: flex; justify-content: space-around; align-items: center;
+    background: rgba(30,30,34,0.55);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 0.5px solid rgba(255,255,255,0.18);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.15);
+    border-radius: 28px; padding: 10px 8px;
+  }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; color: #cfcfd6; padding: 6px 14px; }
+  .tab svg { width: 22px; height: 22px; }
+  .tab .ico-fill { display: none; }
+  .tab.active { color: var(--brand-6); font-weight: 600; }
+  .tab.active .ico-line { display: none; }
+  .tab.active .ico-fill { display: block; }
+
+  .rank-grid { display: flex; gap: 14px; }
+  .rank-card { flex: 1; border-radius: 16px; padding: 16px; color: #fff; position: relative; height: 120px; }
+  .rank-magenta { background: var(--magenta); }
+  .rank-grass { background: var(--grass); color:#06231A; }
+  .rank-top { font-family: Poppins, Arial; font-weight: 700; font-size: 22px; }
+
+  .vip { background: linear-gradient(90deg, var(--gold-1), var(--gold-2)); border-radius: 16px; padding: 16px 20px; color: var(--gold-text); display: flex; justify-content: space-between; align-items: center; }
+  .vip-crown { background: #1A1A1A; color: var(--gold-1); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 600; }
+
+  .shadow-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+  .shadow-box { width: 130px; height: 80px; background: var(--white); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-3); text-align:center; }
+  .s1 { box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+  .s3 { box-shadow: 0 4px 14px rgba(79,224,181,0.30); }
+
+  .radius-grid { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; }
+  .radius-box { width: 90px; height: 64px; background: var(--brand-1); border: 1px solid var(--brand-2); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--brand-6); }
+
+  .func-grid { display: flex; gap: 8px; justify-content: space-between; }
+  .func { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 13px; }
+  .func-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .func-icon.neutral { background: var(--fill); color: var(--text-1); }
+  .func-icon.mint { background: var(--brand-1); color: var(--brand-6); }
+  .func-icon.purple { background: var(--purple-1); color: var(--purple-text); }
+</style>
+</head>
+<body>
+  <h1>Mint Vibe</h1>
+  <div class="subtitle">薄荷青绿 · 轻盈活力风格 · 设计系统 Token 预览（深色模式 · 衍生）</div>
+
+  <h2>1. 主色 · 薄荷绿 Brand Green</h2>
+  <div class="card">
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background:var(--brand-1)"></div><div class="swatch-name">Tint 1</div><div class="swatch-value">#123A30</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--brand-2)"></div><div class="swatch-name">Tint 2</div><div class="swatch-value">#1A5444</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--brand-5)"></div><div class="swatch-name">Hover 5</div><div class="swatch-value">#6BE8C5</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--brand-6); color:#06231A">文字</div><div class="swatch-name">Brand 6</div><div class="swatch-value">#4FE0B5</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--brand-7); color:#06231A">文字</div><div class="swatch-name">Active 7</div><div class="swatch-value">#2FCBA0</div></div>
+    </div>
+    <p style="font-size:12px;color:var(--text-2);margin-top:12px">⚠️ 薄荷绿明度高，其上文字/图标用深色（深绿/近黑），不用白色。</p>
+  </div>
+
+  <h2>2. 辅助色 · 薰衣草紫 Lavender Purple</h2>
+  <div class="card">
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background:var(--purple-1)"></div><div class="swatch-name">Tint 1</div><div class="swatch-value">#2A2350</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--purple-6); color:#1A1340">文字</div><div class="swatch-name">Secondary 6</div><div class="swatch-value">#9D8CF7</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--purple-7); color:#fff">文字</div><div class="swatch-name">Active 7</div><div class="swatch-value">#8472E8</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--purple-text); color:#1A1340">文字</div><div class="swatch-name">紫文字</div><div class="swatch-value">#C3B6FB</div></div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <span style="font-size:12px;color:var(--text-2)">薄荷绿为主题主色，薰衣草紫仅作次级强调；二者并置使用、不混成渐变。</span>
+    </div>
+  </div>
+
+  <h2>3. 中性色与情绪色 Neutrals & Accents</h2>
+  <div class="card">
+    <h3>中性色</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background:var(--canvas)"></div><div class="swatch-name">画布</div><div class="swatch-value">#121214</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--white)"></div><div class="swatch-name">卡片</div><div class="swatch-value">#1E1E22</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--fill)"></div><div class="swatch-name">填充</div><div class="swatch-value">#2A2A30</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--text-1)"></div><div class="swatch-name" style="color:#000">主文字</div><div class="swatch-value">#F2F2F4</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--text-2)"></div><div class="swatch-name">次文字</div><div class="swatch-value">#9A9AA0</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--text-3)"></div><div class="swatch-name">占位</div><div class="swatch-value">#6A6A70</div></div>
+    </div>
+    <h3>情绪 / 场景色</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background:var(--orange)"></div><div class="swatch-name">暖橙</div><div class="swatch-value">#FF7A2F</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:linear-gradient(90deg,var(--gold-1),var(--gold-2))"></div><div class="swatch-name">VIP 金箔</div><div class="swatch-value">#C9A85E→</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--magenta)"></div><div class="swatch-name">榜品红</div><div class="swatch-value">#E94C9B</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--grass)"></div><div class="swatch-name">榜草绿</div><div class="swatch-value">#4FD98A</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--promo-blue)"></div><div class="swatch-name">促销蓝</div><div class="swatch-value">#3A8EF0</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--danger)"></div><div class="swatch-name">危险</div><div class="swatch-value">#F5483B</div></div>
+    </div>
+  </div>
+
+  <h2>4. 液态玻璃 Liquid Glass（仅悬浮底栏）</h2>
+  <div class="card">
+    <div class="glass-stage">
+      <span class="deco" style="left:24px;top:20px">MINT</span>
+      <span class="deco" style="right:30px;bottom:24px">VIBE</span>
+      <div class="glass-bar">
+        <div><div class="gt">液态玻璃悬浮底栏</div><div class="gs">blur(24px) saturate(180%) · 背后内容透出</div></div>
+        <span class="circle-mint" style="width:40px;height:40px">▶</span>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-2);margin-top:12px">仅用于悬浮底部操作栏（顶部导航栏与背景同色、通栏固定，不用玻璃）。暗色下用半透明深色 + 模糊提饱和 + 微弱内高光。</p>
+  </div>
+
+  <h2>5. 字体层级 Typography</h2>
+  <div class="card">
+    <div class="type-row"><span style="font-size:26px;font-weight:700">音乐 · 我的</span><div class="type-meta">页面大标题（中文）· PingFang 700 · 26px</div></div>
+    <div class="type-row"><span style="font-size:18px;font-weight:600">页面标题</span><div class="type-meta">PingFang 600 · 18px</div></div>
+    <div class="type-row"><span style="font-size:16px;font-weight:600">区块标题</span><div class="type-meta">PingFang 600 · 16px</div></div>
+    <div class="type-row"><span style="font-size:15px;font-weight:500">列表主文字</span><div class="type-meta">PingFang 500 · 15px</div></div>
+    <div class="type-row"><span style="font-size:17px;font-weight:700">¥258</span><div class="type-meta">价格 · 700 · 17px</div></div>
+    <div class="type-row"><span style="font-size:13px;color:var(--text-2)">次要信息 · 描述</span><div class="type-meta">PingFang 400 · 13px · #9A9AA0</div></div>
+    <div class="type-row"><span class="wordmark" style="font-size:18px">Poppins</span><div class="type-meta">西文仅用于真正的英文内容（品牌名/英文作品名）</div></div>
+  </div>
+
+  <h2>6. 按钮 Buttons（主题色克制 · 淡色底用深色字）</h2>
+  <div class="card">
+    <div class="row">
+      <button class="pill pill-primary">主操作（薄荷绿）</button>
+      <button class="pill pill-dark">次操作（深灰）</button>
+      <button class="pill pill-outline">次操作（描边）</button>
+      <button class="pill pill-orange">运营 CTA</button>
+      <span class="circle-btn circle-mint">▶</span>
+    </div>
+    <p style="font-size:12px;color:var(--text-2);margin-top:12px">主题色克制（按钮场景）：单页面通常只有 1 个关键操作用薄荷绿；其余次操作<b>并非一律深灰</b>——较重的用深灰实色，较轻或多个并列的用线框次按钮，二者可混用。避免整页大量铺绿。</p>
+    <div class="row" style="margin-top:12px">
+      <button class="pill pill-purple">次级·紫胶囊</button>
+      <button class="pill pill-purple-tint">浅紫</button>
+    </div>
+    <p style="font-size:12px;color:var(--text-2);margin-top:8px">薰衣草紫仅在次级动作需要紫色语义标识时使用。</p>
+  </div>
+
+  <h2>7. 搜索框 / Chip / 角标</h2>
+  <div class="card">
+    <div class="search">🔍 搜搜感兴趣的…</div>
+    <div class="row" style="margin-top:16px">
+      <span class="chip">普通标签</span>
+      <span class="chip chip-mint">薄荷绿选中</span>
+      <span class="chip chip-purple">薰衣草紫选中</span>
+      <span class="badge badge-brand">保内</span>
+      <span class="badge badge-purple">新</span>
+      <span class="badge badge-gray">广告</span>
+      <span class="badge badge-gold">活动</span>
+    </div>
+  </div>
+
+  <h2>8. 功能入口网格（金刚区 · 统一主题色）</h2>
+  <div class="card">
+    <div class="func-grid">
+      <div class="func"><span class="func-icon mint">♪</span>歌手</div>
+      <div class="func"><span class="func-icon mint">▦</span>排行榜</div>
+      <div class="func"><span class="func-icon mint">◈</span>曲风</div>
+      <div class="func"><span class="func-icon mint">✲</span>识曲</div>
+      <div class="func"><span class="func-icon mint">⛶</span>扫一扫</div>
+    </div>
+    <p style="font-size:12px;color:var(--text-2);margin-top:12px">金刚区是同级入口集合，图标<b>统一用薄荷绿</b>、不分主次，保持视觉一致。</p>
+  </div>
+
+  <h2>9. 悬浮玻璃底部操作栏（选中=填充图标+绿+加粗，无色块）</h2>
+  <div class="card" style="background:linear-gradient(135deg,#3A6FD8,#E94C9B)">
+    <div class="tabbar">
+      <div class="tab active">
+        <svg class="ico-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+        <svg class="ico-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M11.3 3.2a1 1 0 0 1 1.4 0l8 7a1 1 0 0 1 .3.75V20a1 1 0 0 1-1 1h-4.5v-6h-4v6H5a1 1 0 0 1-1-1v-9.05a1 1 0 0 1 .3-.75z"/></svg>
+        首页
+      </div>
+      <div class="tab">
+        <svg class="ico-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+        <svg class="ico-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a7 7 0 1 0 4.2 12.6l3.6 3.6a1 1 0 0 0 1.4-1.4l-3.6-3.6A7 7 0 0 0 11 4z"/></svg>
+        发现
+      </div>
+      <div class="tab">
+        <svg class="ico-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21l8.8-8.3a5 5 0 0 0 0-7.1Z"/></svg>
+        <svg class="ico-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21 3.2 12.7a5 5 0 0 1 7.1-7.1l1.7 1.7 1.7-1.7a5 5 0 0 1 7.1 7.1z"/></svg>
+        收藏
+      </div>
+      <div class="tab">
+        <svg class="ico-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <svg class="ico-fill" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M12 14c-4.4 0-8 2.4-8 6 0 .6.4 1 1 1h14c.6 0 1-.4 1-1 0-3.6-3.6-6-8-6z"/></svg>
+        我的
+      </div>
+    </div>
+  </div>
+
+  <h2>10. 强调卡 / VIP 卡</h2>
+  <div class="card">
+    <div class="rank-grid">
+      <div class="rank-card rank-magenta"><div class="rank-top">热歌榜<br>前 100 名</div><div style="font-size:12px;opacity:.9;margin-top:6px">06-05 更新</div></div>
+      <div class="rank-card rank-grass"><div class="rank-top">新歌榜<br>前 100 名</div><div style="font-size:12px;opacity:.9;margin-top:6px">06-05 更新</div></div>
+    </div>
+    <div class="vip" style="margin-top:16px">
+      <div><div style="font-weight:600">会员中心</div><div style="font-size:12px">会员畅享千万好歌</div></div>
+      <span class="vip-crown">♛ ¥1 开通</span>
+    </div>
+  </div>
+
+  <h2>11. 阴影 Elevation</h2>
+  <div class="card">
+    <div class="shadow-grid">
+      <div class="shadow-box" style="border:1px solid var(--divider)">L1 卡片</div>
+      <div class="shadow-box s1">L2 轻浮</div>
+      <div class="shadow-box" style="background:rgba(30,30,34,0.55);-webkit-backdrop-filter:blur(12px) saturate(180%);backdrop-filter:blur(12px) saturate(180%);box-shadow:0 8px 32px rgba(0,0,0,0.45),inset 0 1px 1px rgba(255,255,255,0.15);border:0.5px solid rgba(255,255,255,0.18)">L3 玻璃</div>
+      <div class="shadow-box s3">L4 绿光</div>
+    </div>
+  </div>
+
+  <h2>12. 圆角 Radius</h2>
+  <div class="card">
+    <div class="radius-grid">
+      <div class="radius-box" style="border-radius:6px">6px 角标</div>
+      <div class="radius-box" style="border-radius:12px">12px 封面</div>
+      <div class="radius-box" style="border-radius:16px">16px 卡片</div>
+      <div class="radius-box" style="border-radius:28px">28px 玻璃栏</div>
+      <div class="radius-box" style="border-radius:999px">999px 胶囊</div>
+    </div>
+  </div>
+</body>
+</html>

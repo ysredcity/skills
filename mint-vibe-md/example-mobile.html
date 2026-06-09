@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mint Vibe — 移动端示例页面</title>
+<style>
+  :root {
+    --brand-6: #4FE0B5;
+    --brand-5: #6BE8C5;
+    --brand-7: #2FCBA0;
+    --brand-1: #E9FBF5;
+    --brand-2: #CDF5E7;
+    --neutral-dark: #2A2A30;
+    --neutral-dark-h: #3A3A42;
+    --purple-6: #9D8CF7;
+    --purple-1: #EDEAFD;
+    --purple-text: #6A54D4;
+    --canvas: #F3F2F7;
+    --white: #FFFFFF;
+    --fill: #F0F0F3;
+    --divider: #EBEBEF;
+    --text-1: #1A1A1A;
+    --text-2: #8A8A8F;
+    --text-3: #B5B5BA;
+    --orange: #FF7A2F;
+    --gold-1: #F7E6BC;
+    --gold-2: #EAD194;
+    --gold-text: #9A7B3F;
+    --magenta: #E94C9B;
+    --grass: #4FD98A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, system-ui, sans-serif;
+    background: #d8d8de;
+    display: flex; justify-content: center;
+    min-height: 100vh; padding: 24px 0;
+    color: var(--text-1);
+  }
+
+  /* Phone frame */
+  .phone {
+    width: 390px; height: 844px;
+    background: var(--canvas);
+    border-radius: 44px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+  }
+
+  /* Top stack: status bar + full-width fixed nav, SAME COLOR as canvas (seamless) */
+  .topstack {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 30;
+    background: var(--canvas);
+  }
+  .status { height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-size: 14px; font-weight: 600; }
+  .status .right { display: flex; gap: 6px; align-items: center; font-size: 12px; }
+  .nav { display: flex; align-items: center; gap: 12px; padding: 2px 16px 12px; }
+  .nav .title { font-size: 22px; font-weight: 700; color: var(--text-1); white-space: nowrap; }
+  .nav .search { flex: 1; display: flex; align-items: center; gap: 8px; background: var(--white); border-radius: 999px; height: 38px; padding: 0 14px; color: var(--text-3); font-size: 13px; }
+  .nav .nav-icon { width: 38px; height: 38px; border-radius: 50%; background: var(--white); display: flex; align-items: center; justify-content: center; color: var(--text-2); flex-shrink: 0; }
+
+  /* Scroll area (sits below the fixed nav) */
+  .scroll { position: absolute; top: 98px; left: 0; right: 0; bottom: 0; overflow-y: auto; padding: 8px 16px 132px; }
+  .scroll::-webkit-scrollbar { display: none; }
+
+  .section-title { display: flex; align-items: center; justify-content: space-between; margin: 22px 2px 12px; }
+  .section-title h2 { font-size: 16px; font-weight: 600; }
+  .section-title .more { font-size: 13px; color: var(--text-3); }
+
+  /* Banner big cards (decorative cover art) */
+  .banner-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+  .banner-row::-webkit-scrollbar { display: none; }
+  .banner { flex-shrink: 0; width: 250px; height: 134px; border-radius: 20px; padding: 18px; color: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+  .banner.b1 { background: linear-gradient(135deg, #7B6CF6, #2A2342); }
+  .banner.b2 { background: linear-gradient(135deg, #C9A063, #3A2C1C); }
+  .banner .t { font-size: 20px; font-weight: 700; color: #fff; }
+  .banner .s { font-size: 13px; color: #fff; opacity: 0.85; margin-bottom: 4px; }
+  .banner .play { position: absolute; right: 16px; bottom: 16px; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.92); display: flex; align-items: center; justify-content: center; color: var(--text-1); font-size: 14px; }
+
+  /* Function entries — neutral dark-gray icons, one mint accent only */
+  .func-card { background: var(--white); border-radius: 16px; padding: 18px 8px; display: flex; justify-content: space-around; }
+  .func { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 13px; color: var(--text-1); }
+  .func-icon { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+  .func-icon.neutral { background: var(--fill); color: var(--text-1); }
+  .func-icon.mint { background: var(--brand-1); color: var(--brand-7); }
+  .func-icon svg { width: 22px; height: 22px; }
+
+  /* VIP */
+  .vip { background: linear-gradient(90deg, var(--gold-1), var(--gold-2)); border-radius: 16px; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; }
+  .vip .l .t { font-size: 15px; font-weight: 600; color: var(--gold-text); }
+  .vip .l .s { font-size: 12px; color: var(--gold-text); opacity: 0.8; margin-top: 2px; }
+  .vip .crown { background: var(--text-1); color: var(--gold-2); border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 600; }
+
+  /* Song list */
+  .list-card { background: var(--white); border-radius: 16px; padding: 6px 14px; }
+  .song { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--fill); }
+  .song:last-child { border-bottom: none; }
+  .song .cover { width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0; }
+  .song .meta { flex: 1; min-width: 0; }
+  .song .name { font-size: 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .song .artist { font-size: 12px; color: var(--text-2); margin-top: 3px; }
+  .song .like { color: var(--text-3); font-size: 18px; }
+  .c1 { background: linear-gradient(135deg,#A8C7FA,#5B86E5); }
+  .c2 { background: linear-gradient(135deg,#FBD786,#f7797d); }
+  .c3 { background: linear-gradient(135deg,#84fab0,#8fd3f4); }
+  .c4 { background: linear-gradient(135deg,#d4a5ff,#b07cf0); }
+
+  /* Buttons demo row: primary mint + outline secondary */
+  .btn-row { display: flex; gap: 10px; }
+  .pill { flex: 1; height: 46px; border-radius: 999px; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .pill-mint { border: none; background: var(--brand-6); color: var(--text-1); box-shadow: 0 4px 12px rgba(79,224,181,0.30); }
+  .pill-outline { background: transparent; color: var(--text-1); border: 1px solid #E0E0E5; }
+  .pill-dark { border: none; background: var(--neutral-dark); color: #fff; }
+
+  /* Rank cards */
+  .rank-row { display: flex; gap: 12px; }
+  .rank { flex: 1; border-radius: 18px; padding: 16px; color: #fff; position: relative; height: 128px; }
+  .rank.magenta { background: var(--magenta); }
+  .rank.grass { background: var(--grass); }
+  .rank .top { font-size: 20px; font-weight: 700; line-height: 1.25; }
+  .rank .num { font-size: 13px; font-weight: 700; opacity: 0.95; }
+  .rank .upd { font-size: 11px; opacity: 0.9; margin-top: 4px; }
+  .rank .play { position: absolute; right: 14px; top: 14px; width: 30px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .rank .thumbs { position: absolute; left: 16px; bottom: 14px; display: flex; gap: 6px; }
+  .rank .thumbs span { width: 36px; height: 36px; border-radius: 8px; background: rgba(0,0,0,0.25); }
+
+  /* Promo (operational scene — orange CTA allowed) */
+  .promo { background: linear-gradient(180deg, #fff 0%, var(--brand-1) 100%); border: 1px solid var(--brand-2); border-radius: 16px; padding: 16px; text-align: center; }
+  .promo .t { font-size: 15px; font-weight: 600; }
+  .promo .s { font-size: 12px; color: var(--text-2); margin: 6px 0 14px; }
+  .promo .btn { background: var(--orange); color: #fff; border: none; border-radius: 999px; height: 40px; width: 100%; font-size: 15px; font-weight: 600; cursor: pointer; }
+
+  /* Floating liquid-glass tab bar (the ONLY glass element) */
+  .tabbar {
+    position: absolute; left: 14px; right: 14px; bottom: 16px; z-index: 40;
+    display: flex; justify-content: space-around; align-items: center;
+    background: rgba(255,255,255,0.6);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 0.5px solid rgba(255,255,255,0.6);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.14), inset 0 1px 1px rgba(255,255,255,0.75);
+    border-radius: 26px; padding: 9px 8px;
+  }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; color: var(--text-2); padding: 6px 16px; cursor: pointer; }
+  .tab svg { width: 22px; height: 22px; }
+  /* Active state: filled icon + mint color + bolder label (NO color-block pill) */
+  .tab .ico-fill { display: none; }
+  .tab.active { color: var(--brand-7); font-weight: 600; }
+  .tab.active .ico-line { display: none; }
+  .tab.active .ico-fill { display: block; }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <!-- Top stack: full-width fixed opaque nav -->
+    <div class="topstack">
+      <div class="status">
+        <span>9:41</span>
+        <span class="right">●●● 5G ▮▮▮ 96</span>
+      </div>
+      <div class="nav">
+        <span class="title">音乐</span>
+        <div class="search">🔍 搜搜感兴趣的…</div>
+        <div class="nav-icon">◎</div>
+      </div>
+    </div>
+
+    <!-- Scroll -->
+    <div class="scroll">
+      <!-- Banners -->
+      <div class="banner-row">
+        <div class="banner b1">
+          <div class="s">每日为你精选</div>
+          <div class="t">潮趣日推</div>
+          <div class="play">▶</div>
+        </div>
+        <div class="banner b2">
+          <div class="s">本周上新</div>
+          <div class="t">新歌大赏</div>
+          <div class="play">▶</div>
+        </div>
+      </div>
+
+      <!-- Function entries: neutral icons, one mint accent (识曲) -->
+      <div class="section-title"><h2>发现音乐</h2></div>
+      <div class="func-card">
+        <div class="func">
+          <span class="func-icon mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+          歌手
+        </div>
+        <div class="func">
+          <span class="func-icon mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="4" height="9" rx="1"/><rect x="10" y="4" width="4" height="16" rx="1"/><rect x="16" y="8" width="4" height="12" rx="1"/></svg></span>
+          排行榜
+        </div>
+        <div class="func">
+          <span class="func-icon mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/></svg></span>
+          曲风
+        </div>
+        <div class="func">
+          <span class="func-icon mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg></span>
+          识曲
+        </div>
+        <div class="func">
+          <span class="func-icon mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2M4 12h16"/></svg></span>
+          扫一扫
+        </div>
+      </div>
+
+      <!-- VIP -->
+      <div class="section-title"><h2>会员中心</h2></div>
+      <div class="vip">
+        <div class="l">
+          <div class="t">会员畅享千万好歌</div>
+          <div class="s">解锁高品音质 · 无损下载</div>
+        </div>
+        <span class="crown">♛ ¥1 开通</span>
+      </div>
+
+      <!-- Buttons demo: primary mint + neutral dark secondary -->
+      <div class="section-title"><h2>主 / 次操作</h2></div>
+      <div class="btn-row">
+        <button type="button" class="pill pill-mint">立即播放</button>
+        <button type="button" class="pill pill-outline">收藏歌单</button>
+      </div>
+
+      <!-- Song list -->
+      <div class="section-title"><h2>偶遇心动单曲</h2><span class="more">换一批 ↻</span></div>
+      <div class="list-card">
+        <div class="song">
+          <div class="cover c1"></div>
+          <div class="meta"><div class="name">Tired Today, Happy Tomorrow</div><div class="artist">lofi&Eily</div></div>
+          <span class="like">♡</span>
+        </div>
+        <div class="song">
+          <div class="cover c2"></div>
+          <div class="meta"><div class="name">果犬的猜想</div><div class="artist">花海列车乐队</div></div>
+          <span class="like">♡</span>
+        </div>
+        <div class="song">
+          <div class="cover c3"></div>
+          <div class="meta"><div class="name">慵懒的午后</div><div class="artist">Sarah Kang</div></div>
+          <span class="like" style="color:var(--brand-7)">♥</span>
+        </div>
+        <div class="song">
+          <div class="cover c4"></div>
+          <div class="meta"><div class="name">是你没选我啊</div><div class="artist">大都会乐团</div></div>
+          <span class="like" style="color:var(--brand-7)">♥</span>
+        </div>
+      </div>
+
+      <!-- Rank cards (Chinese titles, no English) -->
+      <div class="section-title"><h2>波波排行榜</h2><span class="more">全部 ›</span></div>
+      <div class="rank-row">
+        <div class="rank magenta">
+          <div class="play">▶</div>
+          <div class="top">热歌榜</div>
+          <div class="num">前 100 名</div>
+          <div class="upd">06-05 更新</div>
+          <div class="thumbs"><span></span><span></span></div>
+        </div>
+        <div class="rank grass">
+          <div class="play">▶</div>
+          <div class="top">新歌榜</div>
+          <div class="num">前 100 名</div>
+          <div class="upd">06-05 更新</div>
+          <div class="thumbs"><span></span><span></span></div>
+        </div>
+      </div>
+
+      <!-- Promo -->
+      <div class="section-title"><h2>限时福利</h2></div>
+      <div class="promo">
+        <div class="t">你有福利会员待领取</div>
+        <div class="s">最多可膨胀 120 天，马上实现听歌自由</div>
+        <button type="button" class="btn">马上领取</button>
+      </div>
+    </div>
+
+    <!-- Floating liquid-glass tab bar (icon + Chinese label) -->
+    <div class="tabbar">
+      <div class="tab active">
+        <svg class="ico-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+        <svg class="ico-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M11.3 3.2a1 1 0 0 1 1.4 0l8 7a1 1 0 0 1 .3.75V20a1 1 0 0 1-1 1h-4.5v-6h-4v6H5a1 1 0 0 1-1-1v-9.05a1 1 0 0 1 .3-.75z"/></svg>
+        首页
+      </div>
+      <div class="tab">
+        <svg class="ico-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+        <svg class="ico-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a7 7 0 1 0 4.2 12.6l3.6 3.6a1 1 0 0 0 1.4-1.4l-3.6-3.6A7 7 0 0 0 11 4z"/></svg>
+        发现
+      </div>
+      <div class="tab">
+        <svg class="ico-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21l8.8-8.3a5 5 0 0 0 0-7.1Z"/></svg>
+        <svg class="ico-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21 3.2 12.7a5 5 0 0 1 7.1-7.1l1.7 1.7 1.7-1.7a5 5 0 0 1 7.1 7.1z"/></svg>
+        收藏
+      </div>
+      <div class="tab">
+        <svg class="ico-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <svg class="ico-fill" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M12 14c-4.4 0-8 2.4-8 6 0 .6.4 1 1 1h14c.6 0 1-.4 1-1 0-3.6-3.6-6-8-6z"/></svg>
+        我的
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(function (t) {
+      t.addEventListener('click', function () {
+        document.querySelectorAll('.tab').forEach(function (x) { x.classList.remove('active'); });
+        t.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
