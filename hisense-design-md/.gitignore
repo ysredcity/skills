@@ -1,0 +1,9 @@
+# 本地生成参考目录：外部参考设计系统、原始 Figma 导出、生成脚本、分析文档。
+# 仅用于本地生成/维护设计系统，不作为交付物，不上传 GitHub。
+/_reference/
+
+# 系统杂项
+.DS_Store
+
+# lint 运行时生成的白名单快照（任意位置）
+**/allowlist.generated.json

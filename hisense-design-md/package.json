@@ -1,0 +1,13 @@
+{
+  "name": "hisense-design-md",
+  "version": "0.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Pangea AI 机读设计系统（tokens + 规范 + lint + skill）",
+  "scripts": {
+    "build": "node scripts/build-tokens.cjs && node scripts/sync-skill.cjs",
+    "sync:skill": "node scripts/sync-skill.cjs",
+    "lint": "node scripts/lint/color-lint.cjs .",
+    "lint:color": "node scripts/lint/color-lint.cjs"
+  }
+}

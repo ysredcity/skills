@@ -1,0 +1,19 @@
+name: design-lint
+
+# L4 硬约束：颜色白名单校验。Agent 是否遵守由这里兜底——不通过则合入被拦截。
+on:
+  push:
+  pull_request:
+
+jobs:
+  color-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      # 默认扫描整个仓库；接入应用代码后可改为扫描 src 等目录：
+      #   node scripts/lint/color-lint.cjs src
+      - name: Color allowlist lint
+        run: node scripts/lint/color-lint.cjs .

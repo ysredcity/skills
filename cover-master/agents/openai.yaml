@@ -1,3 +1,5 @@
 interface:
   display_name: "封面大师"
   short_description: "为设计、运营、自媒体等角色与场景生成小红书及视频封面视觉方案与生图提示词。"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
